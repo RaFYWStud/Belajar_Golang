@@ -10,6 +10,7 @@ func New(db *gorm.DB) *contract.Repository {
 	return &contract.Repository{
 		// Code here
 		// Example:
-		// Example: db: implRepository(db),
+		// Example: implExampleRepository(db),
+		Intro: implIntroRepository(db),
 	}
 }

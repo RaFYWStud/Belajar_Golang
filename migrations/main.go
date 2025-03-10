@@ -14,8 +14,7 @@ type migration interface {
 
 func getMigrations() []migration {
 	return []migration{
-		// Add your migrations here
-		// &exampleMigration{},
+		getCreateIntroTable(),
 	}
 }
 

@@ -20,7 +20,9 @@ type controller interface {
 }
 
 func New(app *gin.Engine, service *contract.Service) {
-	allController := []controller{}
+	allController := []controller{
+		&introController{},
+	}
 
 	// do not modify the code below there
 	for _, c := range allController {
