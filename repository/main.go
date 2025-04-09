@@ -12,5 +12,6 @@ func New(db *gorm.DB) *contract.Repository {
 		// Example:
 		// Example: implExampleRepository(db),
 		Intro: implIntroRepository(db),
+		ToDo: implToDoRepository(db),
 	}
 }

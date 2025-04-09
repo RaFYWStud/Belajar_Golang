@@ -15,6 +15,7 @@ type migration interface {
 func getMigrations() []migration {
 	return []migration{
 		getCreateIntroTable(),
+		getCreateToDoTable(),
 	}
 }
 

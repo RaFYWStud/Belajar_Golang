@@ -64,3 +64,45 @@ func (s *IntroService) CreateIntro(payload *dto.IntroRequest) (*dto.IntroRespons
 
 	return response, nil
 }
+
+func (s *IntroService) UpdateIntro(id int, payload *dto.IntroRequest) (*dto.IntroResponse, error) {
+	intro := &entity.Intro{
+		Nama:          payload.Nama,
+		NamaPanggilan: payload.NamaPanggilan,
+		FunFact:       payload.FunFact,
+		KeinginanBE:   payload.KeinginanBE,
+	}
+
+	err := s.introRepository.UpdateIntro(id, intro)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &dto.IntroResponse{
+		StatusCode: http.StatusOK,
+		Message:    "Berhasil mengubah data",
+		Data: dto.IntroData{
+			ID:            intro.ID,
+			Nama:          intro.Nama,
+			NamaPanggilan: intro.NamaPanggilan,
+			FunFact:       intro.FunFact,
+			KeinginanBE:   intro.KeinginanBE,
+		},
+	}
+
+	return response, nil
+}
+
+func (s *IntroService) DeleteIntro(id int) (*dto.IntroResponse, error) {
+	err := s.introRepository.DeleteIntro(id)
+	if err != nil {
+		return nil, err
+	}
+
+	response := &dto.IntroResponse{
+		StatusCode: http.StatusOK,
+		Message:    "Berhasil menghapus data",
+	}
+
+	return response, nil
+}

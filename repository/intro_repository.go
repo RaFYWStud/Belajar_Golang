@@ -29,3 +29,11 @@ func (r *introRepo) GetIntro(id int) (*entity.Intro, error) {
 func (r *introRepo) CreateIntro(intro *entity.Intro) error {
 	return r.db.Table("intro").Create(intro).Error
 }
+
+func (r *introRepo) UpdateIntro(id int, intro *entity.Intro) error {
+	return r.db.Where("id = ?", id).Updates(&intro).Error
+}
+
+func (r *introRepo) DeleteIntro(id int) error {
+	return r.db.Where("id = ?", id).Delete(&entity.Intro{}).Error
+}
