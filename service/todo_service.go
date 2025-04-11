@@ -81,3 +81,56 @@ func (s *ToDoService) GetToDoByID(id int) (*dto.ToDoResponse, error) {
         },
     }, nil
 }
+
+func (s *ToDoService) ReplaceToDo(id int, payload *dto.ToDoRequest) (*dto.ToDoResponse, error) {
+    todo := &entity.ToDo{
+        ID:   id,
+        Nama: payload.Nama,
+        Hari: payload.Hari,
+        ToDo: payload.ToDo,
+    }
+
+    err := s.todoRepository.ReplaceToDo(id, todo)
+    if err != nil {
+        return nil, err
+    }
+
+    return &dto.ToDoResponse{
+        StatusCode: 200,
+        Message:    "Berhasil mengganti data To-Do",
+        Data: dto.ToDoData{
+            ID:   todo.ID,
+            Nama: todo.Nama,
+            Hari: todo.Hari,
+            ToDo: todo.ToDo,
+        },
+    }, nil
+}
+
+func (s *ToDoService) UpdateToDo(id int, payload *dto.ToDoRequest) (*dto.ToDoResponse, error) {
+    updates := map[string]interface{}{
+        "nama": payload.Nama,
+        "hari": payload.Hari,
+        "todo": payload.ToDo,
+    }
+
+    err := s.todoRepository.UpdateToDo(id, updates)
+    if err != nil {
+        return nil, err
+    }
+
+    return &dto.ToDoResponse{
+        StatusCode: 200,
+        Message:    "Berhasil memperbarui data To-Do",
+        Data: dto.ToDoData{
+            ID:   id,
+            Nama: updates["nama"].(string),
+            Hari: updates["hari"].(string),
+            ToDo: updates["todo"].(string),
+        },
+    }, nil
+}
+
+func (s *ToDoService) DeleteToDo(id int) error {
+    return s.todoRepository.DeleteToDo(id)
+}

@@ -42,3 +42,16 @@ func (r *todoRepo) CreateToDo(todo *entity.ToDo) error {
     }
     return r.db.Table("to_do_list").Create(todo).Error
 }
+
+func (r *todoRepo) ReplaceToDo(id int, todo *entity.ToDo) error {
+    return r.db.Table("to_do_list").Where("id = ?", id).Updates(todo).Error
+}
+
+func (r *todoRepo) UpdateToDo(id int, updates map[string]interface{}) error {
+    return r.db.Table("to_do_list").Where("id = ?", id).Updates(updates).Error
+}
+
+func (r *todoRepo) DeleteToDo(id int) error {
+    return r.db.Table("to_do_list").Where("id = ?", id).Delete(&entity.ToDo{}).Error
+}
+

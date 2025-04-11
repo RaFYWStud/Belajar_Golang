@@ -22,4 +22,7 @@ type ToDoRepository interface {
     GetToDos() ([]entity.ToDo, error)
     CreateToDo(todo *entity.ToDo) error
 	GetToDoByID(id int) (*entity.ToDo, error)
+	ReplaceToDo(id int, todo *entity.ToDo) error
+	UpdateToDo(id int, updates map[string]interface{}) error
+	DeleteToDo(id int) error
 }

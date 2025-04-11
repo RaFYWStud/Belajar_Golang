@@ -25,6 +25,9 @@ func (c *todoController) initRoute(app *gin.RouterGroup) {
     app.POST("/create", c.CreateToDo)
     app.GET("/", c.GetToDos)
     app.GET("/:id", c.GetToDoByID)
+    app.PUT("/:id", c.ReplaceToDo)
+    app.PATCH("/:id", c.UpdateToDo)
+    app.DELETE("/:id", c.DeleteToDo)
 }
 
 func (c *todoController) CreateToDo(ctx *gin.Context) {
@@ -68,4 +71,67 @@ func (c *todoController) GetToDoByID(ctx *gin.Context) {
     }
 
     ctx.JSON(http.StatusOK, response)
+}
+
+func (c *todoController) ReplaceToDo(ctx *gin.Context) {
+    idParam := ctx.Param("id")
+    id, err := strconv.Atoi(idParam)
+    if err != nil {
+        ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+        return
+    }
+
+    var payload dto.ToDoRequest
+    if err := ctx.ShouldBindJSON(&payload); err != nil {
+        ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    response, err := c.service.ReplaceToDo(id, &payload)
+    if err != nil {
+        ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    ctx.JSON(http.StatusOK, response)
+}
+
+func (c *todoController) UpdateToDo(ctx *gin.Context) {
+    idParam := ctx.Param("id")
+    id, err := strconv.Atoi(idParam)
+    if err != nil {
+        ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+        return
+    }
+
+    var payload dto.ToDoRequest
+    if err := ctx.ShouldBindJSON(&payload); err != nil {
+        ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    response, err := c.service.UpdateToDo(id, &payload)
+    if err != nil {
+        ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    ctx.JSON(http.StatusOK, response)
+}
+
+func (c *todoController) DeleteToDo(ctx *gin.Context) {
+    idParam := ctx.Param("id")
+    id, err := strconv.Atoi(idParam)
+    if err != nil {
+        ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+        return
+    }
+
+    err = c.service.DeleteToDo(id)
+    if err != nil {
+        ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+        return
+    }
+
+    ctx.JSON(http.StatusOK, gin.H{"message": "Berhasil menghapus data To-Do"})
 }

@@ -22,4 +22,7 @@ type ToDoService interface {
     CreateToDo(payload *dto.ToDoRequest) (*dto.ToDoResponse, error)
     GetToDos() ([]dto.ToDoResponse, error)
 	GetToDoByID(id int) (*dto.ToDoResponse, error)
+	ReplaceToDo(id int, payload *dto.ToDoRequest) (*dto.ToDoResponse, error)
+	UpdateToDo(id int, payload *dto.ToDoRequest) (*dto.ToDoResponse, error)
+	DeleteToDo(id int) error
 }
