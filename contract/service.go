@@ -5,6 +5,7 @@ import "golang-tutorial/dto"
 type Service struct {
 	Intro IntroService
 	ToDo ToDoService
+	Account AccountService
 }
 
 // type exampleService interface {
@@ -25,4 +26,10 @@ type ToDoService interface {
 	ReplaceToDo(id int, payload *dto.ToDoRequest) (*dto.ToDoResponse, error)
 	UpdateToDo(id int, payload *dto.ToDoRequest) (*dto.ToDoResponse, error)
 	DeleteToDo(id int) error
+}
+
+type AccountService interface {
+	GetAccount(accountID int) (*dto.AccountResponse, error)
+	CreateAccount(payload *dto.AccountRequest) (*dto.AccountResponse, error)
+	Login(payload *dto.AccountRequest) (*dto.AccountResponse, error)
 }

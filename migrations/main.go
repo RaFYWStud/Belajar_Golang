@@ -16,6 +16,7 @@ func getMigrations() []migration {
 	return []migration{
 		getCreateIntroTable(),
 		getCreateToDoTable(),
+		getCreateAccountTable(),
 	}
 }
 

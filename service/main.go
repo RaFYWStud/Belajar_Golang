@@ -9,5 +9,6 @@ func New(repo *contract.Repository) *contract.Service {
 		// Example: implExampleService(repo),
 		Intro: implIntroService(repo),
 		ToDo: implToDoService(repo),
+		Account: implAccountService(repo),
 	}
 }

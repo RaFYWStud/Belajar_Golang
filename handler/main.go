@@ -23,6 +23,7 @@ func New(app *gin.Engine, service *contract.Service) {
 	allController := []controller{
 		&introController{},
 		&todoController{},
+		&AccountController{},
 	}
 
 	// do not modify the code below there

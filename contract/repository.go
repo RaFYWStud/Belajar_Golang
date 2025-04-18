@@ -5,6 +5,7 @@ import "golang-tutorial/entity"
 type Repository struct {
 	Intro IntroRepository
 	ToDo ToDoRepository
+	Account AccountRepository
 }
 
 // type exampleRepository interface {
@@ -25,4 +26,11 @@ type ToDoRepository interface {
 	ReplaceToDo(id int, todo *entity.ToDo) error
 	UpdateToDo(id int, updates map[string]interface{}) error
 	DeleteToDo(id int) error
+}
+
+type AccountRepository interface {
+	GetAccount(id int) (*entity.Account, error)
+	CreateAccount(account *entity.Account) error
+	CheckEmail(email string) (bool, error)
+	GetAccountByEmail(email string) (*entity.Account, error)
 }
