@@ -1,12 +1,13 @@
 package handler
 
 import (
-    "golang-tutorial/contract"
-    "golang-tutorial/dto"
-    "net/http"
-    "strconv"
+	"golang-tutorial/contract"
+	"golang-tutorial/dto"
+	"golang-tutorial/middleware"
+	"net/http"
+	"strconv"
 
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 )
 
 type todoController struct {
@@ -22,8 +23,9 @@ func (c *todoController) initService(service *contract.Service) {
 }
 
 func (c *todoController) initRoute(app *gin.RouterGroup) {
-    app.POST("/create", c.CreateToDo)
-    app.GET("/", c.GetToDos)
+    //app.Use(middleware.MiddlewareLogin)
+    app.POST("/create", middleware.MiddlewareLogin, c.CreateToDo)
+    app.GET("/", middleware.MiddlewareLogin, c.GetToDos)
     app.GET("/:id", c.GetToDoByID)
     app.PUT("/:id", c.ReplaceToDo)
     app.PATCH("/:id", c.UpdateToDo)

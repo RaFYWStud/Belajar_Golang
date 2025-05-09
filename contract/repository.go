@@ -33,4 +33,5 @@ type AccountRepository interface {
 	CreateAccount(account *entity.Account) error
 	CheckEmail(email string) (bool, error)
 	GetAccountByEmail(email string) (*entity.Account, error)
+	GetAccountByUsername(username string) (*entity.Account, error)
 }

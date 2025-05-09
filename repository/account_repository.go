@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"golang-tutorial/contract"	
+	"golang-tutorial/contract"
 	"golang-tutorial/entity"
 
 	"gorm.io/gorm"
@@ -33,6 +33,15 @@ func (r *AccountRepo) CreateAccount(account *entity.Account) error {
 func (r *AccountRepo) GetAccountByEmail(email string) (*entity.Account, error) {
 	var account entity.Account
 	err := r.db.Table("account").Where("email = ?", email).First(&account).Error
+	if err != nil {
+		return nil, err
+	}
+	return &account, nil
+}
+
+func (r *AccountRepo) GetAccountByUsername(username string) (*entity.Account, error){
+	var account entity.Account
+	err := r.db.Table("account").Where("username = ?", username).First(&account).Error
 	if err != nil {
 		return nil, err
 	}
